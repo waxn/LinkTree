@@ -5,96 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linus's Website</title>
     <style>
+        :root {
+            --primary-color: #9b59b6;
+            --secondary-color: #34495e;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            background-color: #f4f4f9;
-            color: #333;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            line-height: 1.6;
         }
+
         header {
-            background-color: #3498db;
-            color: white;
-            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-color);
+            padding: 3rem 1rem;
             text-align: center;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px var(--shadow-color);
         }
+
         h1 {
             margin: 0;
-            font-size: 2.5rem;
+            font-size: 3rem;
+            text-shadow: 2px 2px 4px var(--shadow-color);
         }
+
         .description {
-            margin-top: 0.5rem;
+            margin-top: 1rem;
             font-size: 1.2rem;
         }
+
         .container {
             display: flex;
-            flex: 1;
-            padding: 20px;
+            padding: 2rem;
+            gap: 2rem;
         }
-        .social-column {
-            width: 25%;
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
-            border-radius: 20px;
-            margin-right: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        .social-column, .hosted-services {
+            flex: 1;
+            background-color: var(--secondary-color);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px var(--shadow-color);
             transition: transform 0.3s ease;
         }
-        .social-column:hover {
+
+        .social-column:hover, .hosted-services:hover {
             transform: translateY(-5px);
         }
-        .hosted-services {
-            width: 75%;
-            display: flex;
-            flex-direction: column;
-        }
+
         .column-title {
             text-align: center;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            text-shadow: 1px 1px 2px var(--shadow-color);
         }
-        .services-container {
-            display: flex;
-            flex: 1;
-        }
-        .service-column {
-            width: 50%;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+
         .service {
-            background-color: white;
-            margin: 10px;
-            padding: 15px;
+            background-color: var(--dark-color);
+            margin-bottom: 1rem;
+            padding: 1.2rem;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px var(--shadow-color);
+            transition: all 0.3s ease;
         }
+
         .service:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--shadow-color);
         }
+
         .service img {
             width: 100%;
-            border-radius: 10px;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
         }
+
         .service h3 {
-            margin-top: 10px;
-            color: #3498db;
+            margin: 0.5rem 0;
+            color: var(--primary-color);
         }
+
         .service a {
-            display: inline-block;
-            margin-top: 10px;
-            color: #3498db;
+            color: var(--primary-color);
             text-decoration: none;
             font-weight: bold;
+            display: inline-block;
+            margin-top: 0.5rem;
         }
+
         .service a:hover {
             text-decoration: underline;
         }
@@ -103,7 +109,7 @@
 <body>
     <header>
         <h1>Linus</h1>
-        <p class="description">Welcome to my personal website where you can find my social media profiles and hosted services.</p>
+        <p class="description">Explore my digital presence and discover the services I host.</p>
     </header>
     <div class="container">
         <div class="social-column">
@@ -114,13 +120,8 @@
         </div>
         <div class="hosted-services">
             <div class="column-title">Hosted Services</div>
-            <div class="services-container">
-                <div class="service-column" id="service-column-1">
-                    <!-- Hosted services will be inserted here by JavaScript -->
-                </div>
-                <div class="service-column" id="service-column-2">
-                    <!-- Hosted services will be inserted here by JavaScript -->
-                </div>
+            <div id="hosted-services-content">
+                <!-- Hosted services will be inserted here by JavaScript -->
             </div>
         </div>
     </div>
@@ -146,33 +147,25 @@
 
         function displayData(data) {
             const socialColumn = document.getElementById('social-column-content');
-            const serviceColumn1 = document.getElementById('service-column-1');
-            const serviceColumn2 = document.getElementById('service-column-2');
+            const hostedServices = document.getElementById('hosted-services-content');
 
             socialColumn.innerHTML = '';
-            serviceColumn1.innerHTML = '';
-            serviceColumn2.innerHTML = '';
+            hostedServices.innerHTML = '';
 
-            data.forEach((item, index) => {
+            data.forEach(item => {
+                const serviceElement = `
+                    <div class="service">
+                        <img src="${item.image_link}" alt="${item.name}">
+                        <h3>${item.name}</h3>
+                        <p>${item.description}</p>
+                        <a href="${item.hosted_link}" target="_blank">Visit</a>
+                    </div>
+                `;
+
                 if (item.social) {
-                    socialColumn.innerHTML += `
-                        <div class="service">
-                            <img src="${item.image_link}" alt="${item.name}">
-                            <h3>${item.name}</h3>
-                            <p>${item.description}</p>
-                            <a href="${item.hosted_link}" target="_blank">Visit</a>
-                        </div>
-                    `;
+                    socialColumn.innerHTML += serviceElement;
                 } else if (item.hosted) {
-                    const column = index % 2 === 0 ? serviceColumn1 : serviceColumn2;
-                    column.innerHTML += `
-                        <div class="service">
-                            <img src="${item.image_link}" alt="${item.name}">
-                            <h3>${item.name}</h3>
-                            <p>${item.description}</p>
-                            <a href="${item.hosted_link}" target="_blank">Visit</a>
-                        </div>
-                    `;
+                    hostedServices.innerHTML += serviceElement;
                 }
             });
         }
