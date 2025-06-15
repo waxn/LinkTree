@@ -6,11 +6,11 @@
     <title>Linus's Website</title>
     <style>
         :root {
-            --primary-color: #9b59b6;
-            --secondary-color: #34495e;
-            --dark-color: #2c3e50;
+            --primary-color: #2980b9;
+            --secondary-color: #2c3e50;
+            --dark-color: #1a1a1a;
             --light-color: #ecf0f1;
-            --shadow-color: rgba(0, 0, 0, 0.5);
+            --shadow-color: rgba(0, 0, 0, 0.7);
         }
 
         body {
@@ -23,11 +23,12 @@
         }
 
         header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, rgba(41, 128, 185, 0.45), rgba(44, 62, 80, 0.45)), url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxfHxjb2RpbmclMjBjb21wdXRlcnxlbnwwfDB8fHwxNzE4NjQ3NzQ1fDA&ixlib=rb-4.0.3&q=80&w=1080') center/cover;
             color: var(--light-color);
             padding: 3rem 1rem;
             text-align: center;
             box-shadow: 0 4px 12px var(--shadow-color);
+            backdrop-filter: blur(5px);
         }
 
         h1 {
